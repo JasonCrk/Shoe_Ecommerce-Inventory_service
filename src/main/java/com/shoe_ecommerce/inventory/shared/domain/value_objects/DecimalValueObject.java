@@ -6,7 +6,7 @@ import java.util.Objects;
 public abstract class DecimalValueObject {
     private final BigDecimal value;
 
-    protected DecimalValueObject(BigDecimal value) {
+    public DecimalValueObject(BigDecimal value) {
         this.value = value;
     }
 

@@ -5,7 +5,7 @@ import java.util.Objects;
 public abstract class IntValueObject {
     private final int value;
 
-    protected IntValueObject(int value) {
+    public IntValueObject(int value) {
         this.value = value;
     }
 
