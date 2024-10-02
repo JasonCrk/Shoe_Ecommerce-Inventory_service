@@ -1,8 +1,6 @@
 package com.shoe_ecommerce.inventory.context.shoe_model.domain;
 
-import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.ShoeModelDescription;
-import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.ShoeModelId;
-import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.ShoeModelName;
+import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.*;
 import com.shoe_ecommerce.inventory.context.category.domain.value_objects.CategoryId;
 
 import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
@@ -13,13 +11,25 @@ public final class ShoeModel {
     private final ShoeModelId id;
     private final ShoeModelName name;
     private final ShoeModelDescription description;
+    private final ShoeModelIsPublished isPublished;
+    private final ShoeModelDatePublished datePublished;
     private final CategoryId categoryId;
     private final BrandId brandId;
 
-    public ShoeModel(ShoeModelId id, ShoeModelName name, ShoeModelDescription description, CategoryId categoryId, BrandId brandId) {
+    public ShoeModel(
+            ShoeModelId id,
+            ShoeModelName name,
+            ShoeModelDescription description,
+            ShoeModelIsPublished isPublished,
+            ShoeModelDatePublished datePublished,
+            CategoryId categoryId,
+            BrandId brandId
+    ) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.isPublished = isPublished;
+        this.datePublished = datePublished;
         this.categoryId = categoryId;
         this.brandId = brandId;
     }
@@ -31,7 +41,15 @@ public final class ShoeModel {
             CategoryId categoryId,
             BrandId brandId
     ) {
-        ShoeModel shoeModel = new ShoeModel(id, name, description, categoryId, brandId);
+        ShoeModel shoeModel = new ShoeModel(
+                id,
+                name,
+                description,
+                new ShoeModelIsPublished(false),
+                new ShoeModelDatePublished(),
+                categoryId,
+                brandId
+        );
         return shoeModel;
     }
 
@@ -45,6 +63,14 @@ public final class ShoeModel {
 
     public ShoeModelDescription description() {
         return description;
+    }
+
+    public ShoeModelIsPublished isPublished() {
+        return isPublished;
+    }
+
+    public ShoeModelDatePublished datePublished() {
+        return datePublished;
     }
 
     public CategoryId categoryId() {
@@ -65,12 +91,14 @@ public final class ShoeModel {
         return id.equals(shoeModel.id) &&
                 name.equals(shoeModel.name) &&
                 description.equals(shoeModel.description) &&
+                isPublished.equals(shoeModel.isPublished) &&
+                datePublished.equals(shoeModel.datePublished) &&
                 categoryId.equals(shoeModel.categoryId) &&
                 brandId.equals(shoeModel.brandId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, categoryId, brandId);
+        return Objects.hash(id, name, description, isPublished, datePublished, categoryId, brandId);
     }
 }
