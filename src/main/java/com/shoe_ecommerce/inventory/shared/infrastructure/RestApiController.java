@@ -12,7 +12,7 @@ public abstract class RestApiController {
     private final CommandBus commandBus;
     private final QueryBus queryBus;
 
-    protected RestApiController(CommandBus commandBus, QueryBus queryBus) {
+    public RestApiController(CommandBus commandBus, QueryBus queryBus) {
         this.commandBus = commandBus;
         this.queryBus = queryBus;
     }
