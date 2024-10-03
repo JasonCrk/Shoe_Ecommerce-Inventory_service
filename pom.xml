@@ -40,6 +40,7 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
 		<jwt.version>0.12.6</jwt.version>
+		<openapi.swagger.version>2.6.0</openapi.swagger.version>
 	</properties>
 
 	<dependencies>
@@ -62,6 +63,11 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${openapi.swagger.version}</version>
 		</dependency>
 
 		<dependency>
