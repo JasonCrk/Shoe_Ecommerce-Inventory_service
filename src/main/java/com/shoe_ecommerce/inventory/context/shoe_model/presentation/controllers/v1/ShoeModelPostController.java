@@ -35,9 +35,8 @@ public final class ShoeModelPostController extends RestApiController {
             @Valid CreateShoeModelRequest request,
             @RequestHeader("X-User-Associated-Brand-Id") String associatedBrandId
     ) {
-        String shoeModelId = uuidGenerator.generate();
         this.dispatch(new CreateShoeModelCommand(
-                shoeModelId,
+                uuidGenerator.generate(),
                 request.name(),
                 request.description(),
                 request.categoryId(),
@@ -46,7 +45,7 @@ public final class ShoeModelPostController extends RestApiController {
                         .stream()
                         .map(variant -> CreateShoeModelCommand.ShoeVariant.instance(
                                 uuidGenerator.generate(),
-                                shoeModelId,
+                                variant.name(),
                                 variant.price()
                         ))
                         .toList()
