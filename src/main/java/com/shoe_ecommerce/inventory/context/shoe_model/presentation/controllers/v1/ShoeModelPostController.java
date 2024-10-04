@@ -29,7 +29,7 @@ public final class ShoeModelPostController extends RestApiController {
         this.uuidGenerator = uuidGenerator;
     }
 
-    @Operation(operationId = "Create a shoe model and their variants")
+    @Operation(operationId = "Create a shoe model")
     @PostMapping
     public ResponseEntity<String> create(
             @Valid CreateShoeModelRequest request,
