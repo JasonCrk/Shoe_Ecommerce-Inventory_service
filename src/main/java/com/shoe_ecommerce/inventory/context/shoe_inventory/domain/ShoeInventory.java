@@ -1,25 +1,37 @@
 package com.shoe_ecommerce.inventory.context.shoe_inventory.domain;
 
 import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.value_objects.ShoeInventoryId;
+import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.value_objects.ShoeInventorySize;
 import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.value_objects.ShoeInventoryStock;
-import com.shoe_ecommerce.inventory.context.shoe_size.domain.ShoeSizeId;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantId;
+
+import java.util.Objects;
 
 public final class ShoeInventory {
     private final ShoeInventoryId id;
-    private final ShoeSizeId sizeId;
+    private final ShoeInventorySize size;
     private final ShoeVariantId variantId;
     private final ShoeInventoryStock stock;
 
-    public ShoeInventory(ShoeInventoryId id, ShoeSizeId sizeId, ShoeVariantId variantId, ShoeInventoryStock stock) {
+    public ShoeInventory(
+            ShoeInventoryId id,
+            ShoeInventorySize size,
+            ShoeVariantId variantId,
+            ShoeInventoryStock stock
+    ) {
         this.id = id;
-        this.sizeId = sizeId;
+        this.size = size;
         this.variantId = variantId;
         this.stock = stock;
     }
 
-    public static ShoeInventory create(ShoeInventoryId id, ShoeSizeId sizeId, ShoeVariantId variantId, ShoeInventoryStock stock) {
-        ShoeInventory shoeInventory = new ShoeInventory(id, sizeId, variantId, stock);
+    public static ShoeInventory create(
+            ShoeInventoryId id,
+            ShoeInventorySize size,
+            ShoeVariantId variantId,
+            ShoeInventoryStock stock
+    ) {
+        ShoeInventory shoeInventory = new ShoeInventory(id, size, variantId, stock);
         return shoeInventory;
     }
 
@@ -27,8 +39,8 @@ public final class ShoeInventory {
         return id;
     }
 
-    public ShoeSizeId sizeId() {
-        return sizeId;
+    public ShoeInventorySize size() {
+        return size;
     }
 
     public ShoeVariantId variantId() {
@@ -37,5 +49,23 @@ public final class ShoeInventory {
 
     public ShoeInventoryStock stock() {
         return stock;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+
+        if (object == null || getClass() != object.getClass()) return false;
+
+        ShoeInventory that = (ShoeInventory) object;
+        return id.equals(that.id) &&
+                size.equals(that.size) &&
+                variantId.equals(that.variantId) &&
+                stock.equals(that.stock);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, size, variantId, stock);
     }
 }
