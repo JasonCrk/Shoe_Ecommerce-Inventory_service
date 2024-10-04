@@ -3,10 +3,10 @@ package com.shoe_ecommerce.inventory.shared.domain.value_objects;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public abstract class DecimalValueObject {
+public abstract class MoneyValueObject {
     private final BigDecimal value;
 
-    public DecimalValueObject(BigDecimal value) {
+    public MoneyValueObject(BigDecimal value) {
         this.value = value;
     }
 
@@ -20,7 +20,7 @@ public abstract class DecimalValueObject {
 
         if (object == null || getClass() != object.getClass()) return false;
 
-        DecimalValueObject that = (DecimalValueObject) object;
+        MoneyValueObject that = (MoneyValueObject) object;
         return value.equals(that.value);
     }
 
