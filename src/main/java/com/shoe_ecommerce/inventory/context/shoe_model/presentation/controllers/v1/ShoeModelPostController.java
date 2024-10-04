@@ -40,15 +40,7 @@ public final class ShoeModelPostController extends RestApiController {
                 request.name(),
                 request.description(),
                 request.categoryId(),
-                associatedBrandId,
-                request.variants()
-                        .stream()
-                        .map(variant -> CreateShoeModelCommand.ShoeVariant.instance(
-                                uuidGenerator.generate(),
-                                variant.name(),
-                                variant.price()
-                        ))
-                        .toList()
+                associatedBrandId
         ));
 
         return new ResponseEntity<>(HttpStatus.CREATED);

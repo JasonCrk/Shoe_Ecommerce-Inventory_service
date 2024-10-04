@@ -26,8 +26,7 @@ public final class CreateShoeModelCommandHandler implements CommandHandler<Creat
                 new ShoeModelName(command.name()),
                 new ShoeModelDescription(command.description()),
                 new CategoryId(command.categoryId()),
-                new BrandId(command.assignedBrandId()),
-                command.variants()
+                new BrandId(command.assignedBrandId())
         );
 
         return null;

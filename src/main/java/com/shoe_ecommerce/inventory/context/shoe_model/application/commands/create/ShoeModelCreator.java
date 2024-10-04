@@ -13,29 +13,22 @@ import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.BrandNotExi
 import com.shoe_ecommerce.inventory.context.shared.domain.ports.services.BrandService;
 import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
 
-import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
-import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ports.repositories.ShoeVariantRepository;
 import com.shoe_ecommerce.inventory.shared.domain.Service;
-
-import java.util.List;
 
 @Service
 public final class ShoeModelCreator {
 
     private final ShoeModelRepository shoeModelRepository;
     private final CategoryRepository categoryRepository;
-    private final ShoeVariantRepository shoeVariantRepository;
     private final BrandService brandService;
 
     public ShoeModelCreator(
             ShoeModelRepository shoeModelRepository,
             CategoryRepository categoryRepository,
-            ShoeVariantRepository shoeVariantRepository,
             BrandService brandService
     ) {
         this.shoeModelRepository = shoeModelRepository;
         this.categoryRepository = categoryRepository;
-        this.shoeVariantRepository = shoeVariantRepository;
         this.brandService = brandService;
     }
 
@@ -44,8 +37,7 @@ public final class ShoeModelCreator {
             ShoeModelName name,
             ShoeModelDescription description,
             CategoryId categoryId,
-            BrandId brandId,
-            List<CreateShoeModelCommand.ShoeVariant> variants
+            BrandId brandId
     ) {
         boolean categoryNotExist = !categoryRepository.existsById(categoryId);
         if (categoryNotExist) throw new CategoryNotExist(categoryId);
@@ -55,9 +47,5 @@ public final class ShoeModelCreator {
 
         ShoeModel shoeModel = ShoeModel.create(id, name, description, categoryId, brandId);
         shoeModelRepository.save(shoeModel);
-
-        shoeVariantRepository.saveAll(variants.stream()
-                .map(variant -> new ShoeVariant(variant.id(), shoeModel.id(), variant.name(), variant.price()))
-                .toList());
     }
 }
