@@ -1,4 +1,6 @@
-package com.shoe_ecommerce.inventory.context.shoe_model.presentation.requests;
+package com.shoe_ecommerce.inventory.context.shoe_variant.presentation.requests;
+
+import com.shoe_ecommerce.inventory.context.shared.presentation.validations.is_uuid.IsUuid;
 
 import jakarta.validation.constraints.*;
 
@@ -11,6 +13,9 @@ public record CreateShoeVariantRequest(
 
         @NotNull(message = "Is required")
         @Positive(message = "It cannot be negative")
-        BigDecimal price
+        BigDecimal price,
+
+        @IsUuid(message = "ID is invalid")
+        String shoeModelId
 ) {
 }
