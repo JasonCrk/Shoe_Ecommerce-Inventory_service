@@ -41,7 +41,7 @@ public final class ShoeVariantCreator {
             throw new UnauthorizedAssociatedBrand(shoeModel.brandId());
 
         this.shoeVariantRepository.save(
-                ShoeVariant.create(id, shoeModelId, name, price)
+                ShoeVariant.create(id, associatedBrandId, shoeModelId, name, price)
         );
     }
 }
