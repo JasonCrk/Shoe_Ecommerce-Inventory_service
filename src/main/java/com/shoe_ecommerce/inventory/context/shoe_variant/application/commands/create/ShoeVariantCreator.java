@@ -5,7 +5,7 @@ import com.shoe_ecommerce.inventory.context.shoe_model.domain.exceptions.ShoeMod
 import com.shoe_ecommerce.inventory.context.shoe_model.domain.ports.repositories.ShoeModelRepository;
 import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.ShoeModelId;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
-import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ports.repositories.ShoeVariantRepository;
+import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariantRepository;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.*;
 
 import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.UnauthorizedAssociatedBrand;

@@ -1,6 +1,4 @@
-package com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.models;
-
-import com.shoe_ecommerce.inventory.context.shoe_model.infrastructure.persistence.jpa.models.JpaShoeModel;
+package com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa;
 
 import jakarta.persistence.*;
 

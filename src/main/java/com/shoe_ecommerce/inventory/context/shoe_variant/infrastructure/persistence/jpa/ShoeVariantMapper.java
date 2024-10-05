@@ -1,10 +1,9 @@
-package com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.mappers;
+package com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa;
 
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantId;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantName;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantPrice;
-import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.models.JpaShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.ShoeModelId;
 
 public final class ShoeVariantMapper {

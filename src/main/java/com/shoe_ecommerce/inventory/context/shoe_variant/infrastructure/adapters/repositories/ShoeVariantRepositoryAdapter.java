@@ -1,9 +1,9 @@
 package com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.adapters.repositories;
 
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
-import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ports.repositories.ShoeVariantRepository;
-import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.mappers.ShoeVariantMapper;
-import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.repositories.JpaShoeVariantRepository;
+import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariantRepository;
+import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.ShoeVariantMapper;
+import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.JpaShoeVariantRepository;
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 import org.springframework.transaction.annotation.Transactional;
