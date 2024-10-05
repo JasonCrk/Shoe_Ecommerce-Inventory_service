@@ -1,5 +1,6 @@
 package com.shoe_ecommerce.inventory.context.shoe_model.infrastructure.adapters.repositories;
 
+import com.shoe_ecommerce.inventory.context.category.domain.enums.Gender;
 import com.shoe_ecommerce.inventory.context.shoe_model.domain.ShoeModel;
 import com.shoe_ecommerce.inventory.context.shoe_model.domain.ports.repositories.ShoeModelRepository;
 import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.ShoeModelId;
@@ -33,5 +34,10 @@ public final class ShoeModelRepositoryAdapter implements ShoeModelRepository {
     @Transactional(readOnly = true)
     public Optional<ShoeModel> findById(ShoeModelId id) {
         return repository.findById(id.uuid()).map(ShoeModelMapper::toEntity);
+    }
+
+    @Override
+    public Optional<Gender> getCategoryGenderById(ShoeModelId id) {
+        return repository.getCategoryGenderById(id.uuid());
     }
 }
