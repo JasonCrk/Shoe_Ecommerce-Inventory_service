@@ -8,7 +8,7 @@ public final class ShoeInventorySize extends DoubleValueObject {
         super(value);
     }
 
-    public static double ensureIsValid(double value) throws IllegalArgumentException {
+    private static double ensureIsValid(double value) throws IllegalArgumentException {
         if (value > 0) throw new IllegalArgumentException("Should be positive");
 
         if (value % 1 != 0) {
