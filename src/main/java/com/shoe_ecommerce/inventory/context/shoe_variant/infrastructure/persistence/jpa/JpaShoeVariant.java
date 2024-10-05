@@ -20,6 +20,9 @@ public class JpaShoeVariant {
     @Column(name = "id")
     private UUID id;
 
+    @Column(name = "brand_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID brandId;
+
     @Column(name = "shoe_model_id", columnDefinition = "BINARY(16)", nullable = false)
     private UUID shoeModelId;
 
