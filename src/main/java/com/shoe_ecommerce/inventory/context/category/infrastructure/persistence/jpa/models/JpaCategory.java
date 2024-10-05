@@ -1,9 +1,9 @@
 package com.shoe_ecommerce.inventory.context.category.infrastructure.persistence.jpa.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.shoe_ecommerce.inventory.context.category.domain.enums.Gender;
+
+import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +21,10 @@ public class JpaCategory {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "name", columnDefinition = "VARCHAR(200)", nullable = false, unique = true)
+    @Column(name = "name", columnDefinition = "VARCHAR(200)", nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", columnDefinition = "VARCHAR(30)", nullable = false)
+    private Gender gender;
 }
