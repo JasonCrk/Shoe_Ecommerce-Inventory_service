@@ -20,7 +20,7 @@ public final class AssetContentTypeValidator implements ConstraintValidator<Asse
 
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext constraintValidatorContext) {
-        if (multipartFile == null) return true;
+        if (multipartFile == null || multipartFile.isEmpty()) return true;
 
         boolean noContentTypeMatches = Arrays.stream(contentTypes)
                 .noneMatch(contentType -> contentType.getMimeType().equals(multipartFile.getContentType()));
