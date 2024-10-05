@@ -2,13 +2,16 @@ package com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.adapter
 
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariantRepository;
+import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantId;
 import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.ShoeVariantMapper;
 import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.JpaShoeVariantRepository;
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public final class ShoeVariantRepositoryAdapter implements ShoeVariantRepository {
@@ -17,6 +20,12 @@ public final class ShoeVariantRepositoryAdapter implements ShoeVariantRepository
 
     public ShoeVariantRepositoryAdapter(JpaShoeVariantRepository repository) {
         this.repository = repository;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ShoeVariant> findById(ShoeVariantId id) {
+        return repository.findById(id.uuid()).map(ShoeVariantMapper::toEntity);
     }
 
     @Override
