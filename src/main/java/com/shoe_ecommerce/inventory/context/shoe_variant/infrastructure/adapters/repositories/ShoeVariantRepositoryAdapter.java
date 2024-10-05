@@ -6,6 +6,7 @@ import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persiste
 import com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.persistence.jpa.repositories.JpaShoeVariantRepository;
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,15 @@ public final class ShoeVariantRepositoryAdapter implements ShoeVariantRepository
     }
 
     @Override
+    @Transactional
+    public ShoeVariant save(ShoeVariant variant) {
+        return ShoeVariantMapper.toEntity(
+                repository.save(ShoeVariantMapper.toModel(variant))
+        );
+    }
+
+    @Override
+    @Transactional
     public List<ShoeVariant> saveAll(List<ShoeVariant> variants) {
         return repository.saveAll(variants.stream().map(ShoeVariantMapper::toModel).toList())
                 .stream()
