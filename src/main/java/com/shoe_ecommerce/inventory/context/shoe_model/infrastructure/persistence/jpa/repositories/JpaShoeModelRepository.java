@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface JpaShoeModelRepository extends JpaRepository<JpaShoeModel, UUID> {
 
     @Query(value = """
-            SELECT c.gender FROM JpaShoeModel s INNER JOIN Category c ON s.category_id = c.id WHERE s.id = :id
+            SELECT c.gender FROM JpaShoeModel s INNER JOIN JpaCategory c ON s.categoryId = c.id WHERE s.id = :id
             """)
     Optional<Gender> getCategoryGenderById(@Param("id") UUID id);
 }
