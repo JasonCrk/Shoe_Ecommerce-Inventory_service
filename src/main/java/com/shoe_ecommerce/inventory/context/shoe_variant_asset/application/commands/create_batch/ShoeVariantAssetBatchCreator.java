@@ -1,17 +1,18 @@
 package com.shoe_ecommerce.inventory.context.shoe_variant_asset.application.commands.create_batch;
 
-import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
-import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.UnauthorizedAssociatedBrand;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariantRepository;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.exceptions.ShoeVariantNotExist;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantId;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.ShoeVariantAsset;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.ShoeVariantAssetRepository;
+import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.exceptions.ExceedsTotalAllowableShoeVariantAssets;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.value_objects.ShoeVariantAssetId;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.value_objects.ShoeVariantAssetPosition;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.value_objects.ShoeVariantAssetUrl;
 
+import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
+import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.UnauthorizedAssociatedBrand;
 import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.FileUploadFailure;
 import com.shoe_ecommerce.inventory.context.shared.domain.ports.services.storage.BlobStorageService;
 
@@ -55,6 +56,11 @@ public final class ShoeVariantAssetBatchCreator {
 
         if (!shoeVariant.brandId().equals(associatedBrandId))
             throw new UnauthorizedAssociatedBrand(associatedBrandId);
+
+        long totalShoeVariantAssets = shoeVariantAssetRepository.countByShoeVariantId(shoeVariantId);
+
+        if (totalShoeVariantAssets + assets.size() > ShoeVariantAssetPosition.TOTAL_MAXIMUM)
+            throw new ExceedsTotalAllowableShoeVariantAssets(shoeVariantId);
 
         List<CompletableFuture<ShoeVariantAsset>> savingOfShoeVariantAssets = new ArrayList<>();
 

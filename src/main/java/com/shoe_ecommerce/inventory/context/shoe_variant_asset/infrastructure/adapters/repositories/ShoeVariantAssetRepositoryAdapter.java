@@ -1,5 +1,6 @@
 package com.shoe_ecommerce.inventory.context.shoe_variant_asset.infrastructure.adapters.repositories;
 
+import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantId;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.ShoeVariantAsset;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.ShoeVariantAssetRepository;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.infrastructure.persistence.jpa.ShoeVariantAssetMapper;
@@ -24,5 +25,11 @@ public final class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAsset
         return ShoeVariantAssetMapper.toEntity(
                 repository.save(ShoeVariantAssetMapper.toModel(shoeVariantAsset))
         );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countByShoeVariantId(ShoeVariantId shoeVariantId) {
+        return repository.countByShoeVariantId(shoeVariantId.uuid());
     }
 }
