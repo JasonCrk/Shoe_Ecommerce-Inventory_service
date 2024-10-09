@@ -1,12 +1,12 @@
 package com.shoe_ecommerce.inventory.context.shoe_variant_asset.presentation.requests;
 
-import com.shoe_ecommerce.inventory.shared.presentation.validations.asset_content_type.AllowedAssetContentType;
-import com.shoe_ecommerce.inventory.shared.presentation.validations.asset_content_type.AssetContentType;
-
 import com.shoe_ecommerce.inventory.context.shared.presentation.validations.is_uuid.IsUuid;
 
+import com.shoe_ecommerce.inventory.shared.presentation.validations.asset_content_type.AllowedAssetContentType;
+import com.shoe_ecommerce.inventory.shared.presentation.validations.asset_content_type.AssetContentType;
 import com.shoe_ecommerce.inventory.shared.presentation.validations.image_max_size.ImageMaxSize;
 import com.shoe_ecommerce.inventory.shared.presentation.validations.video_max_size.VideoMaxSize;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
