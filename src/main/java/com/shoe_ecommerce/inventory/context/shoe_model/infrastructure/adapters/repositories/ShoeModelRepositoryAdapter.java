@@ -37,6 +37,7 @@ public final class ShoeModelRepositoryAdapter implements ShoeModelRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Gender> getCategoryGenderById(ShoeModelId id) {
         return repository.getCategoryGenderById(id.uuid());
     }

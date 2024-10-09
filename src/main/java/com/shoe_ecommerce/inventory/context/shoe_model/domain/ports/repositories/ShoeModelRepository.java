@@ -7,8 +7,9 @@ import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.Shoe
 import java.util.Optional;
 
 public interface ShoeModelRepository {
-    ShoeModel save(ShoeModel shoeModel);
     Optional<ShoeModel> findById(ShoeModelId id);
+
+    ShoeModel save(ShoeModel shoeModel);
 
     Optional<Gender> getCategoryGenderById(ShoeModelId id);
 }
