@@ -25,6 +25,16 @@ public final class ShoeVariantAsset {
         this.position = position;
     }
 
+    public static ShoeVariantAsset create(
+            ShoeVariantAssetId id,
+            ShoeVariantId shoeVariantId,
+            ShoeVariantAssetUrl url,
+            ShoeVariantAssetPosition position
+    ) {
+        ShoeVariantAsset asset = new ShoeVariantAsset(id, shoeVariantId, url, position);
+        return asset;
+    }
+
     public ShoeVariantAssetId id() {
         return id;
     }
