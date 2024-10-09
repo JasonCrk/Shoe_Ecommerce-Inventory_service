@@ -43,6 +43,14 @@ public final class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAsset
     }
 
     @Override
+    public void incrementByOneThePositionByShoeVariantIdAndGreaterThanOrEqualPosition(
+            ShoeVariantId id,
+            ShoeVariantAssetPosition position
+    ) {
+        repository.incrementByOneThePositionByShoeVariantIdAndGreaterThanOrEqualPosition(id.uuid(), position.value());
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<ShoeVariantAsset> findById(ShoeVariantAssetId id) {
         return repository.findById(id.uuid()).map(ShoeVariantAssetMapper::toEntity);
