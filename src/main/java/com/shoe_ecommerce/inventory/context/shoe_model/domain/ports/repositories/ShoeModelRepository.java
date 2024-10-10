@@ -12,4 +12,6 @@ public interface ShoeModelRepository {
     ShoeModel save(ShoeModel shoeModel);
 
     Optional<Gender> getCategoryGenderById(ShoeModelId id);
+
+    void deleteById(ShoeModelId id);
 }
