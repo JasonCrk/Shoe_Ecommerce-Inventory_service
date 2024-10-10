@@ -12,7 +12,7 @@ public final class ShoeModel {
     private final ShoeModelName name;
     private final ShoeModelDescription description;
     private final ShoeModelIsPublished isPublished;
-    private final ShoeModelIsDiscontinued isDiscontinued;
+    private ShoeModelIsDiscontinued isDiscontinued;
     private final ShoeModelDatePublished datePublished;
     private final CategoryId categoryId;
     private final BrandId brandId;
@@ -55,6 +55,10 @@ public final class ShoeModel {
                 brandId
         );
         return shoeModel;
+    }
+
+    public void discontinue() {
+        this.isDiscontinued = new ShoeModelIsDiscontinued(true);
     }
 
     public ShoeModelId id() {
