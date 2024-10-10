@@ -4,10 +4,12 @@ import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.*;
 import com.shoe_ecommerce.inventory.context.category.domain.value_objects.CategoryId;
 
 import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
+import com.shoe_ecommerce.inventory.shared.domain.AggregateRoot;
+import com.shoe_ecommerce.inventory.shared.domain.domain_events.shoe_model.ShoeModelDiscontinuedDomainEvent;
 
 import java.util.Objects;
 
-public final class ShoeModel {
+public final class ShoeModel extends AggregateRoot {
     private final ShoeModelId id;
     private final ShoeModelName name;
     private final ShoeModelDescription description;
@@ -58,6 +60,7 @@ public final class ShoeModel {
     }
 
     public void discontinue() {
+        record(new ShoeModelDiscontinuedDomainEvent(id.value()));
         this.isDiscontinued = new ShoeModelIsDiscontinued(true);
     }
 
