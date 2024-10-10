@@ -11,7 +11,7 @@ public final class ShoeInventory {
     private final ShoeInventoryId id;
     private final ShoeInventorySize size;
     private final ShoeVariantId variantId;
-    private final ShoeInventoryStock stock;
+    private ShoeInventoryStock stock;
 
     public ShoeInventory(
             ShoeInventoryId id,
@@ -33,6 +33,10 @@ public final class ShoeInventory {
     ) {
         ShoeInventory shoeInventory = new ShoeInventory(id, size, variantId, stock);
         return shoeInventory;
+    }
+
+    public void updateStock(ShoeInventoryStock stock) {
+        this.stock = stock;
     }
 
     public ShoeInventoryId id() {
