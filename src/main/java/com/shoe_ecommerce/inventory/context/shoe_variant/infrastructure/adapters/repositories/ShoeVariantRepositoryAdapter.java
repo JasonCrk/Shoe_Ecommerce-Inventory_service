@@ -44,4 +44,10 @@ public final class ShoeVariantRepositoryAdapter implements ShoeVariantRepository
                 .map(ShoeVariantMapper::toEntity)
                 .toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void deleteById(ShoeVariantId id) {
+        repository.deleteById(id.uuid());
+    }
 }

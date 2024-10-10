@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ShoeVariantRepository {
+    Optional<ShoeVariant> findById(ShoeVariantId id);
+
     ShoeVariant save(ShoeVariant variant);
     List<ShoeVariant> saveAll(List<ShoeVariant> variants);
 
-    Optional<ShoeVariant> findById(ShoeVariantId id);
+    void deleteById(ShoeVariantId id);
 }
