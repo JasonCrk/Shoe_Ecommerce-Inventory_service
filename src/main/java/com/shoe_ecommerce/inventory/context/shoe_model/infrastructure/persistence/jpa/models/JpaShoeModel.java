@@ -32,6 +32,9 @@ public class JpaShoeModel {
     @Column(name = "is_published", columnDefinition = "BOOLEAN DEFAULT false", nullable = false)
     private boolean isPublished;
 
+    @Column(name = "is_discontinued", columnDefinition = "BOOLEAN DEFAULT false", nullable = false)
+    private boolean isDiscontinued;
+
     @Column(name = "category_id", columnDefinition = "BINARY(16)", nullable = false)
     private UUID categoryId;
 

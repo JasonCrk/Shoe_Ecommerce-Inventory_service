@@ -15,6 +15,7 @@ public final class ShoeModelMapper {
                 new ShoeModelName(model.getName()),
                 new ShoeModelDescription(model.getDescription()),
                 new ShoeModelIsPublished(model.isPublished()),
+                new ShoeModelIsDiscontinued(model.isDiscontinued()),
                 new ShoeModelDatePublished(model.getDatePublished()),
                 new CategoryId(model.getCategoryId().toString()),
                 new BrandId(model.getBrandId().toString())
@@ -27,6 +28,7 @@ public final class ShoeModelMapper {
                 model.name().value(),
                 model.description().value(),
                 model.isPublished().value(),
+                model.isDiscontinued().value(),
                 model.categoryId().uuid(),
                 model.brandId().uuid(),
                 model.datePublished().value()

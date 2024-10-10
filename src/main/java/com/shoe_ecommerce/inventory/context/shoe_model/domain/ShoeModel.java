@@ -12,6 +12,7 @@ public final class ShoeModel {
     private final ShoeModelName name;
     private final ShoeModelDescription description;
     private final ShoeModelIsPublished isPublished;
+    private final ShoeModelIsDiscontinued isDiscontinued;
     private final ShoeModelDatePublished datePublished;
     private final CategoryId categoryId;
     private final BrandId brandId;
@@ -21,6 +22,7 @@ public final class ShoeModel {
             ShoeModelName name,
             ShoeModelDescription description,
             ShoeModelIsPublished isPublished,
+            ShoeModelIsDiscontinued isDiscontinued,
             ShoeModelDatePublished datePublished,
             CategoryId categoryId,
             BrandId brandId
@@ -29,6 +31,7 @@ public final class ShoeModel {
         this.name = name;
         this.description = description;
         this.isPublished = isPublished;
+        this.isDiscontinued = isDiscontinued;
         this.datePublished = datePublished;
         this.categoryId = categoryId;
         this.brandId = brandId;
@@ -46,6 +49,7 @@ public final class ShoeModel {
                 name,
                 description,
                 new ShoeModelIsPublished(false),
+                new ShoeModelIsDiscontinued(false),
                 new ShoeModelDatePublished(),
                 categoryId,
                 brandId
@@ -67,6 +71,10 @@ public final class ShoeModel {
 
     public ShoeModelIsPublished isPublished() {
         return isPublished;
+    }
+
+    public ShoeModelIsDiscontinued isDiscontinued() {
+        return isDiscontinued;
     }
 
     public ShoeModelDatePublished datePublished() {
@@ -92,6 +100,7 @@ public final class ShoeModel {
                 name.equals(shoeModel.name) &&
                 description.equals(shoeModel.description) &&
                 isPublished.equals(shoeModel.isPublished) &&
+                isDiscontinued.equals(shoeModel.isDiscontinued) &&
                 datePublished.equals(shoeModel.datePublished) &&
                 categoryId.equals(shoeModel.categoryId) &&
                 brandId.equals(shoeModel.brandId);
@@ -99,6 +108,6 @@ public final class ShoeModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, isPublished, datePublished, categoryId, brandId);
+        return Objects.hash(id, name, description, isPublished, isDiscontinued, datePublished, categoryId, brandId);
     }
 }
