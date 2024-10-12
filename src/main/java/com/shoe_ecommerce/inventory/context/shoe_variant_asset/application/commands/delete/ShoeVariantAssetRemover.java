@@ -53,7 +53,7 @@ public final class ShoeVariantAssetRemover {
             throw new RemoveOnlyAssetOfShoeVariantAfterPublication(shoeVariant.id());
 
         shoeVariantAssetRepository.deleteById(id);
-        shoeVariantAssetRepository.reduceByOneThePositionByShoeVariantAssetPosition(
+        shoeVariantAssetRepository.reduceByOneThePositionByShoeVariantIdAndGreaterThanPosition(
                 shoeVariant.id(),
                 shoeVariantAsset.position()
         );

@@ -11,16 +11,18 @@ public interface JpaShoeVariantAssetRepository extends JpaRepository<JpaShoeVari
 
     @Modifying
     @Query(value = """
-            UPDATE JpaShoeVariantAsset SET position = position - 1 WHERE shoeVariantId = :shoeVariantId AND position > :position
+            UPDATE JpaShoeVariantAsset SET position = position - 1\s
+            WHERE shoeVariantId = :shoeVariantId AND position > :position
             """)
-    void reduceByOneThePositionByShoeVariantAssetPosition(
+    void reduceByOneThePositionByShoeVariantIdAndGreaterThanPosition(
             @Param("shoeVariantId") UUID shoeVariantId,
             @Param("position") int position
     );
 
     @Modifying
     @Query(value = """
-            UPDATE JpaShoeVariantAsset SET position = position + 1 WHERE shoeVariantId = :shoeVariantId AND position >= :position
+            UPDATE JpaShoeVariantAsset SET position = position + 1\s
+            WHERE shoeVariantId = :shoeVariantId AND position >= :position
             """)
     void incrementByOneThePositionByShoeVariantIdAndGreaterThanOrEqualPosition(
             @Param("shoeVariantId") UUID shoeVariantId,

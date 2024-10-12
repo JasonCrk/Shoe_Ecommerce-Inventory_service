@@ -38,8 +38,11 @@ public final class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAsset
     }
 
     @Override
-    public void reduceByOneThePositionByShoeVariantAssetPosition(ShoeVariantId id, ShoeVariantAssetPosition position) {
-        repository.reduceByOneThePositionByShoeVariantAssetPosition(id.uuid(), position.value());
+    public void reduceByOneThePositionByShoeVariantIdAndGreaterThanPosition(
+            ShoeVariantId id,
+            ShoeVariantAssetPosition position
+    ) {
+        repository.reduceByOneThePositionByShoeVariantIdAndGreaterThanPosition(id.uuid(), position.value());
     }
 
     @Override

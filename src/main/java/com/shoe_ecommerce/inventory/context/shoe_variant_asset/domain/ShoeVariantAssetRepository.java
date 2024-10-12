@@ -15,8 +15,11 @@ public interface ShoeVariantAssetRepository {
 
     void deleteById(ShoeVariantAssetId id);
 
-    // REFACTOR
-    void reduceByOneThePositionByShoeVariantAssetPosition(ShoeVariantId id, ShoeVariantAssetPosition position);
+    void reduceByOneThePositionByShoeVariantIdAndGreaterThanPosition(
+            ShoeVariantId id,
+            ShoeVariantAssetPosition position
+    );
+
     void incrementByOneThePositionByShoeVariantIdAndGreaterThanOrEqualPosition(
             ShoeVariantId id,
             ShoeVariantAssetPosition position
