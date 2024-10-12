@@ -26,7 +26,7 @@ public class ShoeModelPatchController extends RestApiController {
     }
 
     @Operation(operationId = "Discontinue a shoe model by id")
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/discontinue")
     public ResponseEntity<String> discontinue(
             @PathVariable("id") UUID shoeModelId,
             @RequestHeader("X-User-Associated-Brand-Id") String associatedBrandId
