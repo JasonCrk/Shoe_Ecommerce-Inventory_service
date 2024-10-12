@@ -6,6 +6,7 @@ import com.shoe_ecommerce.inventory.context.category.domain.value_objects.Catego
 import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
 import com.shoe_ecommerce.inventory.shared.domain.AggregateRoot;
 import com.shoe_ecommerce.inventory.shared.domain.domain_events.shoe_model.ShoeModelDiscontinuedDomainEvent;
+import com.shoe_ecommerce.inventory.shared.domain.domain_events.shoe_model.ShoeModelIsPublishedDomainEvent;
 
 import java.util.Objects;
 
@@ -13,9 +14,9 @@ public final class ShoeModel extends AggregateRoot {
     private final ShoeModelId id;
     private final ShoeModelName name;
     private final ShoeModelDescription description;
-    private final ShoeModelIsPublished isPublished;
+    private ShoeModelIsPublished isPublished;
     private ShoeModelIsDiscontinued isDiscontinued;
-    private final ShoeModelDatePublished datePublished;
+    private ShoeModelDatePublished datePublished;
     private final CategoryId categoryId;
     private final BrandId brandId;
 
@@ -62,6 +63,12 @@ public final class ShoeModel extends AggregateRoot {
     public void discontinue() {
         record(new ShoeModelDiscontinuedDomainEvent(id.value()));
         this.isDiscontinued = new ShoeModelIsDiscontinued(true);
+    }
+
+    public void publish() {
+        record(new ShoeModelIsPublishedDomainEvent(id.value()));
+        this.isPublished = new ShoeModelIsPublished(true);
+        this.datePublished = ShoeModelDatePublished.now();
     }
 
     public ShoeModelId id() {
