@@ -57,16 +57,20 @@ public final class ShoeVariantAssetBatchCreator {
         if (!shoeVariant.brandId().equals(associatedBrandId))
             throw new UnauthorizedAssociatedBrand(associatedBrandId);
 
-        long totalShoeVariantAssets = shoeVariantAssetRepository.countByShoeVariantId(shoeVariantId);
+        int totalShoeVariantAssets = (int) shoeVariantAssetRepository.countByShoeVariantId(shoeVariantId);
 
-        if (totalShoeVariantAssets + assets.size() > ShoeVariantAssetPosition.TOTAL_MAXIMUM)
+        int newTotalAssets = totalShoeVariantAssets + assets.size();
+
+        if (newTotalAssets > ShoeVariantAssetPosition.TOTAL_MAXIMUM)
             throw new ExceedsTotalAllowableShoeVariantAssets(shoeVariantId);
 
         List<CompletableFuture<ShoeVariantAsset>> savingOfShoeVariantAssets = new ArrayList<>();
 
-        for (int index = 1; index <= assets.size(); index++) {
-            final int currentIndex = index;
-            MediaFile asset = assets.get(index - 1);
+        for (int fileIndex = 1; fileIndex <= assets.size(); fileIndex++) {
+            final int currentFileIndex = fileIndex;
+            final int currentAssetPosition = totalShoeVariantAssets + fileIndex;
+
+            MediaFile asset = assets.get(fileIndex - 1);
 
             CompletableFuture<ShoeVariantAsset> savingShoeVariantAsset = CompletableFuture.supplyAsync(() -> {
                 String shoeVariantAssetBlobUrl;
@@ -76,7 +80,7 @@ public final class ShoeVariantAssetBatchCreator {
                 } catch (InterruptedException | ExecutionException e) {
                     throw new FileUploadFailure(String.format(
                             "A failure occurred while uploading file number <%d>",
-                            currentIndex
+                            currentFileIndex
                     ));
                 }
 
@@ -85,7 +89,7 @@ public final class ShoeVariantAssetBatchCreator {
                                 new ShoeVariantAssetId(uuidGenerator.generate()),
                                 shoeVariantId,
                                 new ShoeVariantAssetUrl(shoeVariantAssetBlobUrl),
-                                new ShoeVariantAssetPosition(currentIndex)
+                                new ShoeVariantAssetPosition(currentAssetPosition)
                         )
                 );
             });
