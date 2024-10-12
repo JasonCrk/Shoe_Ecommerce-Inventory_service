@@ -1,6 +1,7 @@
 package com.shoe_ecommerce.inventory.context.shoe_model.presentation.controllers.v1;
 
 import com.shoe_ecommerce.inventory.context.shoe_model.application.commands.discontinue.DiscontinueShoeModelCommand;
+import com.shoe_ecommerce.inventory.context.shoe_model.application.commands.publish.PublishShoeModelCommand;
 
 import com.shoe_ecommerce.inventory.shared.domain.bus.command.CommandBus;
 import com.shoe_ecommerce.inventory.shared.domain.bus.query.QueryBus;
@@ -31,6 +32,16 @@ public class ShoeModelPatchController extends RestApiController {
             @RequestHeader("X-User-Associated-Brand-Id") String associatedBrandId
     ) {
         this.dispatch(new DiscontinueShoeModelCommand(shoeModelId.toString(), associatedBrandId));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Operation(operationId = "Publish a shoe model by id")
+    @PatchMapping("/{id}/publish")
+    public ResponseEntity<String> publish(
+            @PathVariable("id") UUID shoeModelId,
+            @RequestHeader("X-User-Associated-Brand-Id") String associatedBrandId
+    ) {
+        this.dispatch(new PublishShoeModelCommand(shoeModelId.toString(), associatedBrandId));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
