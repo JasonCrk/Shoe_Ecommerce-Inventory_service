@@ -15,4 +15,12 @@ public interface JpaShoeInventoryRepository extends JpaRepository<JpaShoeInvento
             SELECT sv.brandId FROM JpaShoeInventory si INNER JOIN JpaShoeVariant sv ON si.shoeVariantId = sv.id WHERE si.id = :id
             """)
     Optional<UUID> getBrandIdById(@Param("id") UUID id);
+
+    @Query(value = """
+            SELECT case where COUNT(si) > 0 then true else false FROM JpaShoeInventory si\s
+            INNER JOIN JpaShoeVariant sv ON si.shoeVariantId = sv.id\s
+            INNER JOIN JpaShoeModel sm ON sv.shoeModelId = sm.id\s
+            WHERE sm.id = :id
+            """)
+    boolean existsByShoeModelId(@Param("id") UUID id);
 }
