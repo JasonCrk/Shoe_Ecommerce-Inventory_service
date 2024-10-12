@@ -31,4 +31,7 @@ public class JpaShoeVariant {
 
     @Column(name = "price", columnDefinition = "DECIMAL(8,2)", nullable = false)
     private BigDecimal price;
+
+    @Column(name = "is_discontinued", columnDefinition = "BOOLEAN DEFAULT false", nullable = false)
+    private Boolean isDiscontinued;
 }
