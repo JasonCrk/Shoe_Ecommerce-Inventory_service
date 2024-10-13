@@ -8,15 +8,18 @@ import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.Sh
 
 import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
 
+import com.shoe_ecommerce.inventory.shared.domain.AggregateRoot;
+import com.shoe_ecommerce.inventory.shared.domain.domain_events.shoe_variant.ShoeVariantDiscontinuedDomainEvent;
+
 import java.util.Objects;
 
-public final class ShoeVariant {
+public final class ShoeVariant extends AggregateRoot {
     private final ShoeVariantId id;
     private final BrandId brandId;
     private final ShoeModelId modelId;
     private final ShoeVariantName name;
     private final ShoeVariantPrice price;
-    private final ShoeVariantIsDiscontinued isDiscontinued;
+    private ShoeVariantIsDiscontinued isDiscontinued;
 
     public ShoeVariant(
             ShoeVariantId id,
@@ -74,6 +77,11 @@ public final class ShoeVariant {
 
     public ShoeVariantIsDiscontinued isDiscontinued() {
         return isDiscontinued;
+    }
+
+    public void discontinue() {
+        record(new ShoeVariantDiscontinuedDomainEvent(id.value()));
+        this.isDiscontinued = new ShoeVariantIsDiscontinued(false);
     }
 
     @Override
