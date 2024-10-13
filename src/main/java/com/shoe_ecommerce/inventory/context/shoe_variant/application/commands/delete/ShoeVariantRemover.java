@@ -1,7 +1,11 @@
 package com.shoe_ecommerce.inventory.context.shoe_variant.application.commands.delete;
 
+import com.shoe_ecommerce.inventory.context.shoe_model.domain.ShoeModel;
+import com.shoe_ecommerce.inventory.context.shoe_model.domain.exceptions.ShoeModelNotExist;
+import com.shoe_ecommerce.inventory.context.shoe_model.domain.ports.repositories.ShoeModelRepository;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariantRepository;
+import com.shoe_ecommerce.inventory.context.shoe_variant.domain.exceptions.DeletePublishedShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.exceptions.ShoeVariantNotExist;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantId;
 
@@ -10,19 +14,22 @@ import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.Unauthorize
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 import com.shoe_ecommerce.inventory.shared.domain.bus.event.EventBus;
-import com.shoe_ecommerce.inventory.shared.domain.domain_events.shoe_variant.ShoeVariantDeletedDomainEvent;
-
-import java.util.Collections;
 
 @Service
 public final class ShoeVariantRemover {
 
     private final ShoeVariantRepository shoeVariantRepository;
+    private final ShoeModelRepository shoeModelRepository;
 
     private final EventBus eventBus;
 
-    public ShoeVariantRemover(ShoeVariantRepository shoeVariantRepository, EventBus eventBus) {
+    public ShoeVariantRemover(
+            ShoeVariantRepository shoeVariantRepository,
+            ShoeModelRepository shoeModelRepository,
+            EventBus eventBus
+    ) {
         this.shoeVariantRepository = shoeVariantRepository;
+        this.shoeModelRepository = shoeModelRepository;
         this.eventBus = eventBus;
     }
 
@@ -33,8 +40,14 @@ public final class ShoeVariantRemover {
         if (!shoeVariant.brandId().equals(associatedBrandId))
             throw new UnauthorizedAssociatedBrand(shoeVariant.brandId());
 
-        shoeVariantRepository.deleteById(id);
+        ShoeModel shoeModel = shoeModelRepository.findById(shoeVariant.modelId())
+                .orElseThrow(() -> new ShoeModelNotExist(shoeVariant.modelId()));
 
-        eventBus.publish(Collections.singletonList(new ShoeVariantDeletedDomainEvent(id.value())));
+        boolean shoeVariantIsPublished = shoeModel.isPublished().value() && !shoeVariant.isDiscontinued().value();
+
+        if (shoeVariantIsPublished)
+            throw new DeletePublishedShoeVariant(shoeVariant.id());
+
+        shoeVariantRepository.deleteById(shoeVariant.id());
     }
 }
