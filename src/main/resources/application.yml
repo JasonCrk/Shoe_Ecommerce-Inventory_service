@@ -1,3 +1,50 @@
+server:
+    port: 8081
+
 spring:
     application:
         name: inventory-service
+    datasource:
+        url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            dialect: org.hibernate.dialect.MySQLDialect
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQLDialect
+    rabbitmq:
+        host: ${RABBITMQ_HOST}
+        port: ${RABBITMQ_PORT}
+        username: ${RABBITMQ_USERNAME}
+        password: ${RABBITMQ_PASSWORD}
+        exchange: ${RABBITMQ_EXCHANGE}
+    cloud:
+        kubernetes:
+            loadbalancer:
+                mode: service
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include:
+                    - prometheus
+                    - health
+                    - info
+    metrics:
+        export:
+            prometheus:
+                enabled: true
+
+springdoc:
+    swagger-ui:
+        enabled: true
+    api-docs:
+        enabled: true
+
+microservices:
+    brand-service: brand-service
