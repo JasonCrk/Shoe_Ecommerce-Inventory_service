@@ -6,6 +6,7 @@ import com.shoe_ecommerce.inventory.shared.domain.bus.event.EventBus;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.amqp.AmqpException;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -13,11 +14,12 @@ import java.util.List;
 public final class RabbitMqEventBus implements EventBus {
 
     private final RabbitMqPublisher publisher;
-    private final String exchangeName;
+
+    @Value("${spring.rabbitmq.exchange}")
+    private String exchangeName;
 
     public RabbitMqEventBus(RabbitMqPublisher publisher) {
         this.publisher = publisher;
-        this.exchangeName = "domain_events";
     }
 
     @Override
