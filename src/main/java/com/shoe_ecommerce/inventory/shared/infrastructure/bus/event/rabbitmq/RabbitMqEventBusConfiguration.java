@@ -31,33 +31,21 @@ public class RabbitMqEventBusConfiguration {
 
     @Bean
     public Declarables declaration() {
-        String retryExchangeName = RabbitMqExchangeNameFormatter.retry(exchangeName);
-        String deadLetterExchangeName = RabbitMqExchangeNameFormatter.deadLetter(exchangeName);
-
         TopicExchange domainEventsExchange = new TopicExchange(exchangeName, true, false);
-        TopicExchange retryDomainEventsExchange = new TopicExchange(retryExchangeName, true, false);
-        TopicExchange deadLetterDomainEventsExchange = new TopicExchange(deadLetterExchangeName, true, false);
 
-        List<Declarable> declarables = List.of(domainEventsExchange, retryDomainEventsExchange, deadLetterDomainEventsExchange);
+        List<Declarable> declarables = new ArrayList<>(List.of(domainEventsExchange));
 
-        Collection<Declarable> queuesAndBindings = declareQueuesAndBindings(
-                domainEventsExchange,
-                retryDomainEventsExchange,
-                deadLetterDomainEventsExchange
-        ).stream().flatMap(Collection::stream).toList();
+        Collection<Declarable> queuesAndBindings = declareQueuesAndBindings(domainEventsExchange)
+                .stream().flatMap(Collection::stream).toList();
 
         declarables.addAll(queuesAndBindings);
 
         return new Declarables(declarables);
     }
 
-    private Collection<Collection<Declarable>> declareQueuesAndBindings(
-            TopicExchange domainEventsExchange,
-            TopicExchange retryDomainEventsExchange,
-            TopicExchange deadLetterDomainEventsExchange
-    ) {
+    private Collection<Collection<Declarable>> declareQueuesAndBindings(TopicExchange domainEventsExchange) {
         return domainEventSubscribersInformation.all().stream().map(information -> {
-            String queueName           = RabbitMqQueueNameFormatter.format(information);
+            String queueName = RabbitMqQueueNameFormatter.format(information);
 
             Queue queue = QueueBuilder.durable(queueName).build();
 
