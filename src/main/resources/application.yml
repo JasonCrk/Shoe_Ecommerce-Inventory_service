@@ -26,6 +26,14 @@ spring:
         kubernetes:
             loadbalancer:
                 mode: service
+        azure:
+            storage:
+                blob:
+                    shoe-variant-asset-container: ${AZURE_STORAGE_ACCOUNT_SHOE_VARIANT_ASSET_CONTAINER}
+
+azure:
+    blob-storage:
+        connection: ${AZURE_STORAGE_ACCOUNT_CONNECTION}
 
 management:
     endpoints:
