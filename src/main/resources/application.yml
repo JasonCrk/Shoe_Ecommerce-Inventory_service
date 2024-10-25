@@ -47,4 +47,4 @@ springdoc:
         enabled: true
 
 microservices:
-    brand-service: brand-service
+    brand-service: ${MICROSERVICE_BRAND_SERVICE}
