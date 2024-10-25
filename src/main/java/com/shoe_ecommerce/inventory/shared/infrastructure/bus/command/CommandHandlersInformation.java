@@ -16,7 +16,7 @@ public final class CommandHandlersInformation {
     HashMap<Class<? extends Command>, Class<? extends CommandHandler>> indexedCommandHandlers;
 
     public CommandHandlersInformation() {
-        Reflections reflections = new Reflections("com.shoe_ecommerce.shopping_cart");
+        Reflections reflections = new Reflections("com.shoe_ecommerce.inventory");
         Set<Class<? extends CommandHandler>> classes = reflections.getSubTypesOf(CommandHandler.class);
 
         indexedCommandHandlers = formatHandlers(classes);

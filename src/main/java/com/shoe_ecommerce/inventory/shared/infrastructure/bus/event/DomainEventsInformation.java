@@ -13,7 +13,7 @@ public final class DomainEventsInformation {
     HashMap<String, Class<? extends DomainEvent>> indexedDomainEvents;
 
     public DomainEventsInformation() {
-        Reflections reflections = new Reflections("com.shoe_ecommerce.shopping_cart");
+        Reflections reflections = new Reflections("com.shoe_ecommerce.inventory");
         Set<Class<? extends DomainEvent>> classes = reflections.getSubTypesOf(DomainEvent.class);
 
         try {

@@ -20,7 +20,7 @@ public final class DomainEventSubscribersInformation {
     }
 
     private static HashMap<Class<?>, DomainEventSubscriberInformation> scanDomainEventSubscribers() {
-        Reflections reflections = new Reflections("com.shoe_ecommerce.shopping_cart");
+        Reflections reflections = new Reflections("com.shoe_ecommerce.inventory");
         Set<Class<?>> subscribers = reflections.getTypesAnnotatedWith(DomainEventSubscriber.class);
 
         HashMap<Class<?>, DomainEventSubscriberInformation> subscribersInformation = new HashMap<>();

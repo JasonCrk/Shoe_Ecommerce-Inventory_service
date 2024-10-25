@@ -16,8 +16,8 @@ public final class QueryHandlersInformation {
     HashMap<Class<? extends Query>, Class<? extends QueryHandler>> indexedQueryHandlers;
 
     public QueryHandlersInformation() {
-        Reflections reflections = new Reflections("com.shoe_ecommerce.shopping_cart");
-        Set<Class<? extends QueryHandler>> classes     = reflections.getSubTypesOf(QueryHandler.class);
+        Reflections reflections = new Reflections("com.shoe_ecommerce.inventory");
+        Set<Class<? extends QueryHandler>> classes = reflections.getSubTypesOf(QueryHandler.class);
 
         indexedQueryHandlers = formatHandlers(classes);
     }
