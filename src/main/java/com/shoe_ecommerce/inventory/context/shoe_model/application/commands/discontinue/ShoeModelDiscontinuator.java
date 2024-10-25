@@ -13,12 +13,17 @@ import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.Unauthorize
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 import com.shoe_ecommerce.inventory.shared.domain.bus.event.EventBus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public final class ShoeModelDiscontinuator {
 
     private final ShoeModelRepository shoeModelRepository;
 
     private final EventBus eventBus;
+
+    Logger logger = LoggerFactory.getLogger(ShoeModelDiscontinuator.class);
 
     public ShoeModelDiscontinuator(ShoeModelRepository shoeModelRepository, EventBus eventBus) {
         this.shoeModelRepository = shoeModelRepository;
@@ -43,5 +48,9 @@ public final class ShoeModelDiscontinuator {
         shoeModelRepository.save(shoeModel);
 
         eventBus.publish(shoeModel.pullDomainEvents());
+
+        logger.info(
+                "The <{}> brand has discontinued the <{}> shoe model", associatedBrandId.value(), shoeModelId.value()
+        );
     }
 }

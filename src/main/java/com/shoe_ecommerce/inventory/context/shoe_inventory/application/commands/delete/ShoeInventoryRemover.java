@@ -11,6 +11,9 @@ import com.shoe_ecommerce.inventory.shared.domain.Service;
 import com.shoe_ecommerce.inventory.shared.domain.bus.event.EventBus;
 import com.shoe_ecommerce.inventory.shared.domain.domain_events.shoe_inventory.ShoeInventoryDeletedDomainEvent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collections;
 
 @Service
@@ -18,6 +21,8 @@ public final class ShoeInventoryRemover {
 
     private final ShoeInventoryRepository shoeInventoryRepository;
     private final EventBus eventBus;
+
+    Logger logger = LoggerFactory.getLogger(ShoeInventoryRemover.class);
 
     public ShoeInventoryRemover(ShoeInventoryRepository shoeInventoryRepository, EventBus eventBus) {
         this.shoeInventoryRepository = shoeInventoryRepository;
@@ -34,5 +39,7 @@ public final class ShoeInventoryRemover {
         shoeInventoryRepository.deleteById(id);
 
         this.eventBus.publish(Collections.singletonList(new ShoeInventoryDeletedDomainEvent(id.value())));
+
+        logger.info("The <{}> brand has removed the <{}> shoe inventory", associatedBrandId.value(), id.value());
     }
 }

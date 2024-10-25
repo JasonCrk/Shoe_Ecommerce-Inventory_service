@@ -12,12 +12,16 @@ import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.Unauthorize
 import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public final class ShoeVariantCreator {
 
     private final ShoeVariantRepository shoeVariantRepository;
     private final ShoeModelRepository shoeModelRepository;
+
+    Logger logger = LoggerFactory.getLogger(ShoeVariantCreator.class);
 
     public ShoeVariantCreator(
             ShoeVariantRepository shoeVariantRepository,
@@ -42,6 +46,10 @@ public final class ShoeVariantCreator {
 
         this.shoeVariantRepository.save(
                 ShoeVariant.create(id, associatedBrandId, shoeModelId, name, price)
+        );
+
+        logger.info(
+                "The <{}> brand has created new shoe variant <{}>", associatedBrandId.value(), id.value()
         );
     }
 }

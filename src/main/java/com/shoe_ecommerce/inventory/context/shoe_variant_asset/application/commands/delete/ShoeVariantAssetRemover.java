@@ -17,12 +17,17 @@ import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.Unauthorize
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public final class ShoeVariantAssetRemover {
 
     private final ShoeVariantAssetRepository shoeVariantAssetRepository;
     private final ShoeVariantRepository shoeVariantRepository;
     private final ShoeModelRepository shoeModelRepository;
+
+    Logger logger = LoggerFactory.getLogger(ShoeVariantAssetRemover.class);
 
     public ShoeVariantAssetRemover(
             ShoeVariantAssetRepository shoeVariantAssetRepository,
@@ -56,6 +61,13 @@ public final class ShoeVariantAssetRemover {
         shoeVariantAssetRepository.reduceByOneThePositionByShoeVariantIdAndGreaterThanPosition(
                 shoeVariant.id(),
                 shoeVariantAsset.position()
+        );
+
+        logger.info(
+                "The <{}> brand has removed the <{}> asset from the <{}> shoe variant",
+                associatedBrandId.value(),
+                id.value(),
+                shoeVariant.id().value()
         );
     }
 }

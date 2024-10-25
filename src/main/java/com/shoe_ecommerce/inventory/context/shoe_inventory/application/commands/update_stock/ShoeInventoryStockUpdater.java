@@ -14,11 +14,16 @@ import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.Unauthorize
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public final class ShoeInventoryStockUpdater {
 
     private final ShoeInventoryRepository shoeInventoryRepository;
     private final ShoeVariantRepository shoeVariantRepository;
+
+    Logger logger = LoggerFactory.getLogger(ShoeInventoryStockUpdater.class);
 
     public ShoeInventoryStockUpdater(
             ShoeInventoryRepository shoeInventoryRepository,
@@ -41,5 +46,13 @@ public final class ShoeInventoryStockUpdater {
         shoeInventory.updateStock(newStock);
 
         shoeInventoryRepository.save(shoeInventory);
+
+        logger.info(
+                "The <{}> brand has updated the stock of <{}> shoe inventory of the <{}> shoe variant. The new stock is {}",
+                associatedBrandId.value(),
+                shoeInventoryId.value(),
+                shoeVariant.id().value(),
+                newStock.value()
+        );
     }
 }

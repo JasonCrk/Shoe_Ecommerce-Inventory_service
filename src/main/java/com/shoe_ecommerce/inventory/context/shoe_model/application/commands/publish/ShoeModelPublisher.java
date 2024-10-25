@@ -14,6 +14,9 @@ import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 import com.shoe_ecommerce.inventory.shared.domain.bus.event.EventBus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public final class ShoeModelPublisher {
 
@@ -21,6 +24,8 @@ public final class ShoeModelPublisher {
     private final ShoeInventoryRepository shoeInventoryRepository;
 
     private final EventBus eventBus;
+
+    Logger logger = LoggerFactory.getLogger(ShoeModelPublisher.class);
 
     public ShoeModelPublisher(
             ShoeModelRepository shoeModelRepository,
@@ -50,5 +55,9 @@ public final class ShoeModelPublisher {
         shoeModelRepository.save(shoeModel);
 
         eventBus.publish(shoeModel.pullDomainEvents());
+
+        logger.info(
+                "The <{}> brand has published the <{}> shoe model", associatedBrandId.value(), shoeModelId.value()
+        );
     }
 }

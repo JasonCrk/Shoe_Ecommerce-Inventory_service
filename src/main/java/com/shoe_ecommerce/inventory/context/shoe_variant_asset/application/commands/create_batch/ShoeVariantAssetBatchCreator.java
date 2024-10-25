@@ -20,6 +20,9 @@ import com.shoe_ecommerce.inventory.shared.domain.MediaFile;
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 import com.shoe_ecommerce.inventory.shared.domain.UuidGenerator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -33,6 +36,8 @@ public final class ShoeVariantAssetBatchCreator {
 
     private final BlobStorageService storageService;
     private final UuidGenerator uuidGenerator;
+
+    Logger logger = LoggerFactory.getLogger(ShoeVariantAssetBatchCreator.class);
 
     public ShoeVariantAssetBatchCreator(
             ShoeVariantAssetRepository shoeVariantAssetRepository,
@@ -102,5 +107,11 @@ public final class ShoeVariantAssetBatchCreator {
         } catch (InterruptedException | ExecutionException e) {
             throw new FileUploadFailure(e.getMessage());
         }
+
+        logger.info(
+                "The <{}> brand has created new assets for the <{}> shoe variant",
+                associatedBrandId.value(),
+                shoeVariantId.value()
+        );
     }
 }

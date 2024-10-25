@@ -15,12 +15,17 @@ import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public final class ShoeModelCreator {
 
     private final ShoeModelRepository shoeModelRepository;
     private final CategoryRepository categoryRepository;
     private final BrandService brandService;
+
+    Logger logger = LoggerFactory.getLogger(ShoeModelCreator.class);
 
     public ShoeModelCreator(
             ShoeModelRepository shoeModelRepository,
@@ -47,5 +52,7 @@ public final class ShoeModelCreator {
 
         ShoeModel shoeModel = ShoeModel.create(id, name, description, categoryId, brandId);
         shoeModelRepository.save(shoeModel);
+
+        logger.info("The <{}> brand has created a new shoe model <{}>", brandId.value(), shoeModel.id().value());
     }
 }

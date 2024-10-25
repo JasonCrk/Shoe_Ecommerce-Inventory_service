@@ -11,10 +11,15 @@ import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.Unauthorize
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public final class ShoeModelRemover {
 
     private final ShoeModelRepository shoeModelRepository;
+
+    Logger logger = LoggerFactory.getLogger(ShoeModelRemover.class);
 
     public ShoeModelRemover(ShoeModelRepository shoeModelRepository) {
         this.shoeModelRepository = shoeModelRepository;
@@ -31,5 +36,9 @@ public final class ShoeModelRemover {
             throw new DeletePublishedShoeModel(shoeModelId);
 
         shoeModelRepository.deleteById(shoeModelId);
+
+        logger.info(
+                "The <{}> brand has eliminated the <{}> shoe model", associatedBrandId.value(), shoeModelId.value()
+        );
     }
 }

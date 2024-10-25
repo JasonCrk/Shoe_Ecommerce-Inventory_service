@@ -19,6 +19,9 @@ import com.shoe_ecommerce.inventory.context.shared.domain.ports.services.storage
 import com.shoe_ecommerce.inventory.shared.domain.MediaFile;
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -28,6 +31,8 @@ public final class ShoeVariantAssetCreator {
     private final ShoeVariantAssetRepository shoeVariantAssetRepository;
 
     private final BlobStorageService storageService;
+
+    Logger logger = LoggerFactory.getLogger(ShoeVariantAssetCreator.class);
 
     public ShoeVariantAssetCreator(
             ShoeVariantRepository shoeVariantRepository,
@@ -82,5 +87,9 @@ public final class ShoeVariantAssetCreator {
 
         ShoeVariantAsset shoeVariantAsset = ShoeVariantAsset.create(id, shoeVariantId, assetUrl, assetPosition);
         shoeVariantAssetRepository.save(shoeVariantAsset);
+
+        logger.info(
+                "The <{}> brand has created new shoe variant asset <{}>", associatedBrandId.value(), id.value()
+        );
     }
 }

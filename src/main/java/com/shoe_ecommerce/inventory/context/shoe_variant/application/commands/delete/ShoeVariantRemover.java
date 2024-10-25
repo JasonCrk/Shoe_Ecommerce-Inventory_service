@@ -13,7 +13,9 @@ import com.shoe_ecommerce.inventory.context.shared.domain.BrandId;
 import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.UnauthorizedAssociatedBrand;
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
-import com.shoe_ecommerce.inventory.shared.domain.bus.event.EventBus;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public final class ShoeVariantRemover {
@@ -21,16 +23,14 @@ public final class ShoeVariantRemover {
     private final ShoeVariantRepository shoeVariantRepository;
     private final ShoeModelRepository shoeModelRepository;
 
-    private final EventBus eventBus;
+    Logger logger = LoggerFactory.getLogger(ShoeVariantRemover.class);
 
     public ShoeVariantRemover(
             ShoeVariantRepository shoeVariantRepository,
-            ShoeModelRepository shoeModelRepository,
-            EventBus eventBus
+            ShoeModelRepository shoeModelRepository
     ) {
         this.shoeVariantRepository = shoeVariantRepository;
         this.shoeModelRepository = shoeModelRepository;
-        this.eventBus = eventBus;
     }
 
     public void remove(ShoeVariantId id, BrandId associatedBrandId) {
@@ -49,5 +49,9 @@ public final class ShoeVariantRemover {
             throw new DeletePublishedShoeVariant(shoeVariant.id());
 
         shoeVariantRepository.deleteById(shoeVariant.id());
+
+        logger.info(
+                "The <{}> brand has eliminated the <{}> shoe variant", associatedBrandId.value(), id.value()
+        );
     }
 }
