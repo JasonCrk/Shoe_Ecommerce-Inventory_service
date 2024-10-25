@@ -46,7 +46,7 @@ public class ShoeVariantRepositoryAdapter implements ShoeVariantRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteById(ShoeVariantId id) {
         repository.deleteById(id.uuid());
     }

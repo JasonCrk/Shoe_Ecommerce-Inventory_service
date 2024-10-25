@@ -24,6 +24,18 @@ public class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAssetReposi
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<ShoeVariantAsset> findById(ShoeVariantAssetId id) {
+        return repository.findById(id.uuid()).map(ShoeVariantAssetMapper::toEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countByShoeVariantId(ShoeVariantId shoeVariantId) {
+        return repository.countByShoeVariantId(shoeVariantId.uuid());
+    }
+
+    @Override
     @Transactional
     public ShoeVariantAsset save(ShoeVariantAsset shoeVariantAsset) {
         return ShoeVariantAssetMapper.toEntity(
@@ -38,6 +50,7 @@ public class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAssetReposi
     }
 
     @Override
+    @Transactional
     public void reduceByOneThePositionByShoeVariantIdAndGreaterThanPosition(
             ShoeVariantId id,
             ShoeVariantAssetPosition position
@@ -46,22 +59,11 @@ public class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAssetReposi
     }
 
     @Override
+    @Transactional
     public void incrementByOneThePositionByShoeVariantIdAndGreaterThanOrEqualPosition(
             ShoeVariantId id,
             ShoeVariantAssetPosition position
     ) {
         repository.incrementByOneThePositionByShoeVariantIdAndGreaterThanOrEqualPosition(id.uuid(), position.value());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<ShoeVariantAsset> findById(ShoeVariantAssetId id) {
-        return repository.findById(id.uuid()).map(ShoeVariantAssetMapper::toEntity);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public long countByShoeVariantId(ShoeVariantId shoeVariantId) {
-        return repository.countByShoeVariantId(shoeVariantId.uuid());
     }
 }
