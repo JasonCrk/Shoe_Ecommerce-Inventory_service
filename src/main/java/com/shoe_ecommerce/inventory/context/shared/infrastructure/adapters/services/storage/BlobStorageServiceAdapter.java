@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public final class BlobStorageServiceAdapter implements BlobStorageService {
+public class BlobStorageServiceAdapter implements BlobStorageService {
 
     @Value("${spring.cloud.azure.storage.blob.shoe-variant-asset-container}")
     public String blobStorageShoeVariantAssetContainer;

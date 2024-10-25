@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public final class ShoeModelRepositoryAdapter implements ShoeModelRepository {
+public class ShoeModelRepositoryAdapter implements ShoeModelRepository {
 
     private final JpaShoeModelRepository repository;
 

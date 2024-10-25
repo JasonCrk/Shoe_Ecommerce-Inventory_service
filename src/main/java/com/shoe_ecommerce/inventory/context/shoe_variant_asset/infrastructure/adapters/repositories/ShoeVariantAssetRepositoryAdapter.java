@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public final class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAssetRepository {
+public class ShoeVariantAssetRepositoryAdapter implements ShoeVariantAssetRepository {
 
     private final JpaShoeVariantAssetRepository repository;
 

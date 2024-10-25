@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public final class CategoryRepositoryAdapter implements CategoryRepository {
+public class CategoryRepositoryAdapter implements CategoryRepository {
 
     private final JpaCategoryRepository repository;
 

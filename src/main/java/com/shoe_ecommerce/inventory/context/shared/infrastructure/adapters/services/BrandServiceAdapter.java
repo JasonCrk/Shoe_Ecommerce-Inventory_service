@@ -7,7 +7,7 @@ import com.shoe_ecommerce.inventory.context.shared.infrastructure.client.BrandMi
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 
 @Service
-public final class BrandServiceAdapter implements BrandService {
+public class BrandServiceAdapter implements BrandService {
 
     private final BrandMicroserviceClient client;
 

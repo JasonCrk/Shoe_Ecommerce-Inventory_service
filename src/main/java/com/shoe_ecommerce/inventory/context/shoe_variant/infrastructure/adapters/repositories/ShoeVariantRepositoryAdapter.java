@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class ShoeVariantRepositoryAdapter implements ShoeVariantRepository {
+public class ShoeVariantRepositoryAdapter implements ShoeVariantRepository {
 
     private final JpaShoeVariantRepository repository;
 
