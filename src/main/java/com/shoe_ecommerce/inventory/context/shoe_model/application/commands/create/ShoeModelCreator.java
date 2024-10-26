@@ -47,8 +47,12 @@ public final class ShoeModelCreator {
         boolean categoryNotExist = !categoryRepository.existsById(categoryId);
         if (categoryNotExist) throw new CategoryNotExist(categoryId);
 
-        boolean brandNotExist = !brandService.existsById(brandId);
-        if (brandNotExist) throw new BrandNotExist(brandId);
+        try {
+            boolean brandNotExist = !brandService.existsById(brandId);
+            if (brandNotExist) throw new BrandNotExist(brandId);
+        } catch (RuntimeException ex) {
+            throw new BrandNotExist(brandId);
+        }
 
         ShoeModel shoeModel = ShoeModel.create(id, name, description, categoryId, brandId);
         shoeModelRepository.save(shoeModel);

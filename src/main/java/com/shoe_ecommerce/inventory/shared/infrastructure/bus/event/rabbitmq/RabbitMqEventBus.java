@@ -1,25 +1,28 @@
 package com.shoe_ecommerce.inventory.shared.infrastructure.bus.event.rabbitmq;
 
+import com.shoe_ecommerce.inventory.shared.domain.Service;
 import com.shoe_ecommerce.inventory.shared.domain.bus.event.DomainEvent;
 import com.shoe_ecommerce.inventory.shared.domain.bus.event.EventBus;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.amqp.AmqpException;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
-@Slf4j
-public final class RabbitMqEventBus implements EventBus {
-
+@Primary
+@Service
+public class RabbitMqEventBus implements EventBus {
     private final RabbitMqPublisher publisher;
+    private final String exchangeName;
 
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchangeName;
+    Logger logger = LoggerFactory.getLogger(RabbitMqEventBus.class);
 
     public RabbitMqEventBus(RabbitMqPublisher publisher) {
         this.publisher = publisher;
+        this.exchangeName = "shoe_ecommerce.domain_events";
     }
 
     @Override
@@ -31,7 +34,7 @@ public final class RabbitMqEventBus implements EventBus {
         try {
             this.publisher.publish(domainEvent, exchangeName);
         } catch (AmqpException exception) {
-            log.error(String.format("Erro when publishing the domain event <%s> <%s>", domainEvent.eventName(), domainEvent.eventId()));
+            logger.error(exception.getMessage());
         }
     }
 }

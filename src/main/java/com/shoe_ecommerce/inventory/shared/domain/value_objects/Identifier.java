@@ -35,7 +35,7 @@ public abstract class Identifier implements Serializable {
         if (object == null || getClass() != object.getClass()) return false;
 
         Identifier that = (Identifier) object;
-        return Objects.equals(value, that.value);
+        return value.equals(that.value);
     }
 
     @Override

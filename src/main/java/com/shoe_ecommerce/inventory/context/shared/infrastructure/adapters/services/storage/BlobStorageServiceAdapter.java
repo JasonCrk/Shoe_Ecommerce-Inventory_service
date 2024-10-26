@@ -10,6 +10,9 @@ import com.shoe_ecommerce.inventory.shared.domain.MediaFile;
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 import com.shoe_ecommerce.inventory.shared.domain.UuidGenerator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 
@@ -25,6 +28,8 @@ public class BlobStorageServiceAdapter implements BlobStorageService {
     private final BlobServiceClient blobServiceClient;
     private final UuidGenerator uuidGenerator;
 
+    Logger logger = LoggerFactory.getLogger(BlobStorageServiceAdapter.class);
+
     public BlobStorageServiceAdapter(BlobServiceClient blobServiceClient, UuidGenerator uuidGenerator) {
         this.blobServiceClient = blobServiceClient;
         this.uuidGenerator = uuidGenerator;
@@ -36,6 +41,7 @@ public class BlobStorageServiceAdapter implements BlobStorageService {
         try {
             return CompletableFuture.completedFuture(upload(mediaFile, blobStorageShoeVariantAssetContainer));
         } catch (IOException e) {
+            logger.error(e.getMessage());
             return CompletableFuture.failedFuture(e);
         }
     }
@@ -52,6 +58,6 @@ public class BlobStorageServiceAdapter implements BlobStorageService {
 
         blobClient.upload(mediaFile.getInputStream(), mediaFile.getSize(), true);
 
-        return new Blob(blobClient.getBlobUrl(), blobClient.getBlobName());
+        return new Blob(blobClient.getBlobName(), blobClient.getBlobUrl());
     }
 }

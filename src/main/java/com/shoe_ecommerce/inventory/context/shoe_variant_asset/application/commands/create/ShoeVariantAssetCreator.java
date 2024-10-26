@@ -75,6 +75,7 @@ public final class ShoeVariantAssetCreator {
              String uploadedUrl = storageService.uploadShoeVariantAsset(asset).get().url();
              assetUrl = new ShoeVariantAssetUrl(uploadedUrl);
         } catch (InterruptedException | ExecutionException e) {
+            logger.error(e.getMessage());
             throw new FileUploadFailure("An error occurred while trying to upload the file");
         }
 

@@ -4,7 +4,6 @@ import com.shoe_ecommerce.inventory.shared.infrastructure.bus.event.DomainEventS
 import com.shoe_ecommerce.inventory.shared.infrastructure.bus.event.DomainEventsInformation;
 
 import org.springframework.amqp.core.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,9 +16,7 @@ import java.util.stream.Collectors;
 public class RabbitMqEventBusConfiguration {
     private final DomainEventSubscribersInformation domainEventSubscribersInformation;
     private final DomainEventsInformation domainEventsInformation;
-
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchangeName;
+    private final String exchangeName;
 
     public RabbitMqEventBusConfiguration(
             DomainEventSubscribersInformation domainEventSubscribersInformation,
@@ -27,13 +24,16 @@ public class RabbitMqEventBusConfiguration {
     ) {
         this.domainEventSubscribersInformation = domainEventSubscribersInformation;
         this.domainEventsInformation = domainEventsInformation;
+        this.exchangeName = "shoe_ecommerce.domain_events";
     }
 
     @Bean
     public Declarables declaration() {
         TopicExchange domainEventsExchange = new TopicExchange(exchangeName, true, false);
 
-        List<Declarable> declarables = new ArrayList<>(List.of(domainEventsExchange));
+        List<Declarable> declarables = new ArrayList<>();
+
+        declarables.add(domainEventsExchange);
 
         Collection<Declarable> queuesAndBindings = declareQueuesAndBindings(domainEventsExchange)
                 .stream().flatMap(Collection::stream).toList();

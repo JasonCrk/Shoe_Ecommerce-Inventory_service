@@ -17,7 +17,7 @@ public interface JpaShoeInventoryRepository extends JpaRepository<JpaShoeInvento
     Optional<UUID> getBrandIdById(@Param("id") UUID id);
 
     @Query(value = """
-            SELECT case where COUNT(si) > 0 then true else false FROM JpaShoeInventory si\s
+            SELECT (COUNT(si) > 0) FROM JpaShoeInventory si\s
             INNER JOIN JpaShoeVariant sv ON si.shoeVariantId = sv.id\s
             INNER JOIN JpaShoeModel sm ON sv.shoeModelId = sm.id\s
             WHERE sm.id = :id

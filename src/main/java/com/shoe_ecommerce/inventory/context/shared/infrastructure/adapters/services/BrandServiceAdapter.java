@@ -6,6 +6,8 @@ import com.shoe_ecommerce.inventory.context.shared.infrastructure.client.BrandMi
 
 import com.shoe_ecommerce.inventory.shared.domain.Service;
 
+import org.springframework.http.ResponseEntity;
+
 @Service
 public class BrandServiceAdapter implements BrandService {
 
@@ -17,6 +19,7 @@ public class BrandServiceAdapter implements BrandService {
 
     @Override
     public boolean existsById(BrandId id) {
-        return client.existsById(id.uuid());
+        ResponseEntity<Void> response = client.existsById(id.uuid());
+        return response.getStatusCode().is2xxSuccessful();
     }
 }

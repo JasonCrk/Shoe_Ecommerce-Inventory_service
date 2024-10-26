@@ -11,7 +11,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 @Service
 public final class RabbitMqPublisher {
-
     private final RabbitTemplate rabbitTemplate;
 
     public RabbitMqPublisher(RabbitTemplate rabbitTemplate) {

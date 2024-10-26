@@ -4,6 +4,7 @@ import com.shoe_ecommerce.inventory.shared.domain.bus.event.DomainEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ShoeModelIsPublishedDomainEvent extends DomainEvent {
     private final String id;
@@ -16,6 +17,11 @@ public class ShoeModelIsPublishedDomainEvent extends DomainEvent {
     public ShoeModelIsPublishedDomainEvent(String id) {
         super(id);
         this.id = id;
+    }
+
+    public ShoeModelIsPublishedDomainEvent() {
+        super(null);
+        this.id = null;
     }
 
     @Override
@@ -38,5 +44,20 @@ public class ShoeModelIsPublishedDomainEvent extends DomainEvent {
                 occurredOn,
                 (String) body.get("id")
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ShoeModelIsPublishedDomainEvent that = (ShoeModelIsPublishedDomainEvent) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
