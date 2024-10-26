@@ -41,6 +41,7 @@ azure:
 management:
     endpoints:
         web:
+            base-path: /inventory-service/metrics
             exposure:
                 include:
                     - prometheus
