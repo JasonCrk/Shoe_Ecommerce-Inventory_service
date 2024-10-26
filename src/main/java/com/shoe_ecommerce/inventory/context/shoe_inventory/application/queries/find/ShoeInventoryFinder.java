@@ -1,5 +1,6 @@
 package com.shoe_ecommerce.inventory.context.shoe_inventory.application.queries.find;
 
+import com.shoe_ecommerce.inventory.context.shoe_inventory.application.queries.ShoeInventoryResponse;
 import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.ShoeInventory;
 import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.exceptions.ShoeInventoryNotExist;
 import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.ports.repositories.ShoeInventoryRepository;
@@ -46,8 +47,14 @@ public final class ShoeInventoryFinder {
 
         return new ShoeInventoryResponse(
                 shoeInventory.id().value(),
-                shoeInventory.size().value(),
-                shoeInventory.stock().value()
+                shoeInventory.stock().value(),
+                new ShoeInventoryResponse.ShoeVariantResponse(
+                        shoeVariant.id().value(),
+                        shoeVariant.name().value(),
+                        shoeVariant.price().value(),
+                        shoeVariant.isDiscontinued().value(),
+                        shoeModel.id().value()
+                )
         );
     }
 }
