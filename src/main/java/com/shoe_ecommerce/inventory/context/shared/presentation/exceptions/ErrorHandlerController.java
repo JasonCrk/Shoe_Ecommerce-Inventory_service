@@ -1,18 +1,20 @@
 package com.shoe_ecommerce.inventory.context.shared.presentation.exceptions;
 
 import com.shoe_ecommerce.inventory.context.category.domain.exceptions.CategoryNotExist;
-import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.BrandNotExist;
-import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.FileUploadFailure;
-import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.UnauthorizedAssociatedBrand;
 import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.exceptions.ShoeInventoryNotExist;
 import com.shoe_ecommerce.inventory.context.shoe_inventory.domain.exceptions.SizeNotCorrespondingToGender;
 import com.shoe_ecommerce.inventory.context.shoe_model.domain.exceptions.*;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.exceptions.DeletePublishedShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.exceptions.ShoeVariantAlreadyDiscontinued;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.exceptions.ShoeVariantNotExist;
+import com.shoe_ecommerce.inventory.context.shoe_variant.domain.exceptions.SomeShoeVariantsHaveNotAssetsAtAll;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.exceptions.ExceedsTotalAllowableShoeVariantAssets;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.exceptions.RemoveOnlyAssetOfShoeVariantAfterPublication;
 import com.shoe_ecommerce.inventory.context.shoe_variant_asset.domain.exceptions.ShoeVariantAssetNotExist;
+
+import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.BrandNotExist;
+import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.FileUploadFailure;
+import com.shoe_ecommerce.inventory.context.shared.domain.exceptions.UnauthorizedAssociatedBrand;
 
 import com.shoe_ecommerce.inventory.shared.domain.exceptions.DomainError;
 
@@ -127,6 +129,13 @@ public class ErrorHandlerController {
         return handleException(ex, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(SomeShoeVariantsHaveNotAssetsAtAll.class)
+    public ResponseEntity<DomainErrorResponse> handleSomeShoeVariantsHaveNotAssetsAtAll(
+            SomeShoeVariantsHaveNotAssetsAtAll ex
+    ) {
+        return handleException(ex, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorValidationResponse> handleValidationException(
             MethodArgumentNotValidException ex
@@ -139,9 +148,7 @@ public class ErrorHandlerController {
 
         List<String> globalErrors = new ArrayList<>();
 
-        ex.getGlobalErrors().forEach(error -> {
-            globalErrors.add(error.getDefaultMessage());
-        });
+        ex.getGlobalErrors().forEach(error -> globalErrors.add(error.getDefaultMessage()));
 
         return new ResponseEntity<>(
                 new ErrorValidationResponse(globalErrors, fieldErrors),
