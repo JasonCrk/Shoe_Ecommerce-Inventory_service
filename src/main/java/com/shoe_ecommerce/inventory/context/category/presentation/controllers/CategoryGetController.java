@@ -1,6 +1,7 @@
 package com.shoe_ecommerce.inventory.context.category.presentation.controllers;
 
 import com.shoe_ecommerce.inventory.context.category.application.queries.CategoryListResponse;
+import com.shoe_ecommerce.inventory.context.category.application.queries.CategoryResponse;
 import com.shoe_ecommerce.inventory.context.category.application.queries.search.SearchCategoriesQuery;
 
 import com.shoe_ecommerce.inventory.shared.domain.bus.command.CommandBus;
@@ -28,5 +29,11 @@ public class CategoryGetController extends RestApiController {
     @GetMapping
     public ResponseEntity<CategoryListResponse> findAll() {
         return ResponseEntity.ok((CategoryListResponse) this.ask(new SearchCategoriesQuery()));
+    }
+
+    @Operation(operationId = "Get category by ID", description = "Get category by ID")
+    @GetMapping()
+    public ResponseEntity<CategoryResponse> find() {
+        return ResponseEntity.ok((CategoryResponse) this.ask(new SearchCategoriesQuery()));
     }
 }
