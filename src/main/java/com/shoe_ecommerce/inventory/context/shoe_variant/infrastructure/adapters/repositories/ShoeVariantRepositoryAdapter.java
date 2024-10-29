@@ -1,5 +1,6 @@
 package com.shoe_ecommerce.inventory.context.shoe_variant.infrastructure.adapters.repositories;
 
+import com.shoe_ecommerce.inventory.context.shoe_model.domain.value_objects.ShoeModelId;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariant;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.ShoeVariantRepository;
 import com.shoe_ecommerce.inventory.context.shoe_variant.domain.value_objects.ShoeVariantId;
@@ -10,8 +11,8 @@ import com.shoe_ecommerce.inventory.shared.domain.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoeVariantRepositoryAdapter implements ShoeVariantRepository {
@@ -29,11 +30,20 @@ public class ShoeVariantRepositoryAdapter implements ShoeVariantRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Map<ShoeVariantId, Integer> findAllShoeVariantByShoeModelIdWithTotalAssets(ShoeModelId shoeModelId) {
+        return repository.findAllShoeVariantsByShoeModelIdWithTotalAssets(shoeModelId.uuid())
+                .stream()
+                .collect(Collectors.toMap(
+                    data -> new ShoeVariantId(data[0].toString()),
+                    data -> (Integer) data[1]
+                ));
+    }
+
+    @Override
     @Transactional
     public ShoeVariant save(ShoeVariant variant) {
-        return ShoeVariantMapper.toEntity(
-                repository.save(ShoeVariantMapper.toModel(variant))
-        );
+        return ShoeVariantMapper.toEntity(repository.save(ShoeVariantMapper.toModel(variant)));
     }
 
     @Override
