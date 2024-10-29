@@ -10,6 +10,7 @@ import com.shoe_ecommerce.inventory.shared.domain.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,12 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
     @Transactional(readOnly = true)
     public Optional<Category> findById(CategoryId id) {
         return repository.findById(id.uuid()).map(CategoryMapper::toEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Category> findAll() {
+        return repository.findAll().stream().map(CategoryMapper::toEntity).toList();
     }
 
     @Override
